@@ -29,6 +29,8 @@ public class TransactionService {
     @Autowired
     RestTemplate restTemplate;
 
+    private static final String AUTHORIZE_URL = "https://util.devi.tools/api/v2/authorize";
+
     public Transaction createTransaction(TransactionDTO transactionDTO) throws Exception {
         User sender = this.userService.findUserById(transactionDTO.senderId());
         User receiver = this.userService.findUserById(transactionDTO.receiverId());
@@ -60,7 +62,7 @@ public class TransactionService {
     }
 
     public boolean authorizeTransaction(User sender, BigDecimal value) {
-        ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
+        ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity(AUTHORIZE_URL, Map.class);
 
         if (authorizationResponse.getStatusCode() == HttpStatus.OK) {
             String authorization = (String) authorizationResponse.getBody().get("authorization");

@@ -13,11 +13,13 @@ public class NotificationService {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static final String NOTIFY_URL = "https://util.devi.tools/api/v1/notify";
+
     public void sendNotification(User user, String message) {
         String email = user.getEmail();
         NotificationDTO notificationRequest = new NotificationDTO(email, message);
 
-        ResponseEntity<String> notificationResponse= restTemplate.postForEntity("https://util.devi.tools/api/v1/notify", notificationRequest, String.class);
+        ResponseEntity<String> notificationResponse = restTemplate.postForEntity(NOTIFY_URL, notificationRequest, String.class);
 
         if (!(notificationResponse.getStatusCode() == HttpStatus.OK)) {
             System.out.println("Falha ao enviar notificacao");
