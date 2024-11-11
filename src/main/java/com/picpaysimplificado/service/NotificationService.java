@@ -22,7 +22,7 @@ public class NotificationService {
         ResponseEntity<String> notificationResponse = restTemplate.postForEntity(NOTIFY_URL, notificationRequest, String.class);
 
         if (!(notificationResponse.getStatusCode() == HttpStatus.OK)) {
-            System.out.println("Falha ao enviar notificacao");
+
             throw new RuntimeException("Servico de notificacao esta fora do ar");
         }
     }
